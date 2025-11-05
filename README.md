@@ -1,4 +1,4 @@
 # Projeto-Infracom
-Parte 1 do projeto de Infraestrutura de Comunicação
+Parte 1 do projeto da disciplina Infraestrutura de Comunicação (IF-678)
 
 
