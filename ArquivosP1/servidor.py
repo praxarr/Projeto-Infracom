@@ -36,7 +36,7 @@ def recebe_arquivo(udp):
             f.write(chunk)
             received += len(chunk)
             # progresso do recebimento do arquivo printado no terminal durante execucao 
-            if received >= (n * (filesize // 100)) and n <= 100:
+            if received >= (filesize * (n / 100)) and n <= 100:
                 print(f" -> %{n} do arquivo foi recebido")
                 n += 25
     print(f"Arquivo salvo como: {end_recebidos}")

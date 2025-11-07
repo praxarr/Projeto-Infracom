@@ -64,7 +64,7 @@ def main():
             chunk, _ = udp.recvfrom(BUFFER_SIZE)
             f.write(chunk)
             received += len(chunk)
-            if received >= (n * (filesize // 100)) and n <= 100:
+            if received >= (filesize * (n / 100)) and n <= 100:
                 print(f" -> %{n} do arquivo foi recebido")
                 n += 25
 
