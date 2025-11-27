@@ -36,7 +36,7 @@ def enviar_arquivo(udp,endereco, segmento:bytes, num_seq):
 
             if ack_flag == 1 and ack_num == num_seq:
                 udp.settimeout(None)
-                return True
+                break
 
             else: 
                 print(f"[{endereco}] Recebido algo que não é ACK correto (aseq={ack_num}, aflag={ack_flag}). Ignorando.")
@@ -45,7 +45,6 @@ def enviar_arquivo(udp,endereco, segmento:bytes, num_seq):
             tentativas += 1
             print(f"[{endereco}] Timeout aguardando ACK do cliente. Retransmitindo...")
     udp.settimeout(None)
-    return False
 
 
 
@@ -80,7 +79,7 @@ def main():
     # Cliente envia nome e tamanho do arquivo para o servidor
     
     nome_seg = criar_pacote(num_seq, 0, filename)
-    verifica = enviar_arquivo(udp, end_servidor, nome_seg, num_seq)
+    enviar_arquivo(udp, end_servidor, nome_seg, num_seq)
 
     num_seq = 1 - num_seq
 
@@ -182,3 +181,4 @@ def main():
 
 
 main()
+
