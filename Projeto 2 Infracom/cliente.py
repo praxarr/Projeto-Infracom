@@ -23,8 +23,12 @@ def enviar_arquivo(udp,endereco, segmento:bytes, num_seq):
     tentativas = 0
     while tentativas < NUM_TENTATIVAS:
         udp.settimeout(0.5)
-        udp.sendto(segmento, endereco)
-        _, _, payload = verifica_segmento(segmento)
+        perda = random.uniform(0, 1)
+        if perda <= 0.1:
+             print("[SIMULAÇÃO] Pacote perdido.")
+        else:
+            udp.sendto(segmento, endereco)
+            _, _, payload = verifica_segmento(segmento)
 
         try:
             cabecalho, _ = udp.recvfrom(20)
@@ -42,6 +46,7 @@ def enviar_arquivo(udp,endereco, segmento:bytes, num_seq):
             print(f"[{endereco}] Timeout aguardando ACK do cliente. Retransmitindo...")
     udp.settimeout(None)
     return False
+
 
 
 
@@ -173,6 +178,7 @@ def main():
     print("Arquivo devolvido salvo em:", end_final)
     #Fecha a porta do cliente
     udp.close()
+
 
 
 main()
