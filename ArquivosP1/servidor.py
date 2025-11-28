@@ -1,5 +1,6 @@
 import socket
 import os
+import random
 
 # Ip 0.0.0.0 indica que o servidor recebe arquivos de qualquer IP, incluindo IPs publicos
 

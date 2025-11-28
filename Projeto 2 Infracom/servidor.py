@@ -1,5 +1,6 @@
 import socket
 import os
+import random
 # Ip 0.0.0.0 indica que o servidor recebe arquivos de qualquer IP, incluindo IPs publicos
 
 BUFFER_SIZE = 1024
@@ -23,28 +24,39 @@ def criar_pacote(seq: int, flag: int, payload: bytes) :
     
     return header + payload
 
-def enviar_arquivo(udp,endereco, segmento:bytes, num_seq):
+def enviar_arquivo(udp, endereco, segmento: bytes, num_seq):
     tentativas = 0
     while tentativas < NUM_TENTATIVAS:
         udp.settimeout(0.5)
-        udp.sendto(segmento, endereco)
-        _, _, payload = verifica_segmento(segmento)
+        perda = random.uniform(0, 1)
+
+        # 1. Decisão de Envio ou Simulação de Perda
+        if perda <= 0.05:  # 5% de chance de perda simulada
+            print(f"[SIMULAÇÃO] Pacote {num_seq} perdido no envio.")
+        else:
+            udp.sendto(segmento, endereco)
+            print(f"[ENVIO] Pacote {num_seq} enviado para a rede.")
+            _, _, payload = verifica_segmento(segmento)
 
         try:
+            # 2. Espera pelo ACK (Ocorre tenhamos enviado ou não)
             cabecalho, _ = udp.recvfrom(20)
             ack_num, ack_flag, _ = verifica_segmento(cabecalho)
 
             if ack_flag == 1 and ack_num == num_seq:
-                num_seq = 1 - num_seq
+                # ACK correto recebido
+                print(f"[RECEBIMENTO] ACK {ack_num} recebido corretamente.")
                 udp.settimeout(None)
-                break
-
-            else: 
-                print(f"[{endereco}] Recebido algo que não é ACK correto (aseq={ack_num}, aflag={ack_flag}). Ignorando.")
+                break 
+            else:
+                print(f"[{endereco}] ACK incorreto (seq={ack_num}). Ignorando.")
 
         except socket.timeout:
+            # Se simulamos perda (não enviamos), vai cair aqui após 0.5s.
+            # Se enviamos e o ACK perdeu, vai cair aqui também.
             tentativas += 1
-            print(f"[{endereco}] Timeout aguardando ACK do cliente. Retransmitindo...")
+            print(f"[{endereco}] Timeout (Tentativa {tentativas}/{NUM_TENTATIVAS}). Retransmitindo...")
+            
     udp.settimeout(None)
 
 
