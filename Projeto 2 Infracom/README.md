@@ -1,6 +1,11 @@
 # Projeto-Infracom
 Parte 2 do projeto da disciplina Infraestrutura de Comunicação (IF-678)
 
+Integrantes:
+- Elisson Rodrigo da Silva Araujo
+- Pedro Henrique Andrade da Silva
+- Théo Praxar Farias Lopes
+
 ## Descrição do Projeto
 Evolução do sistema cliente-servidor para implementar **Transferência Confiável de Dados** (Reliable Data Transfer) utilizando o protocolo UDP em Python. O sistema garante a integridade e a ordem dos dados através da implementação do algoritmo **RDT 3.0 (Stop-and-Wait)**, simulando um canal de rede sujeito a perdas de pacotes.
 
@@ -39,7 +44,7 @@ Evolução do sistema cliente-servidor para implementar **Transferência Confiá
 - **Mecanismo**: Uso de variáveis de controle (`expected_seq` e `num_seq`) alternadas (1 - seq).
 
 ## Estrutura de Diretórios
-    projeto/
+    Projeto 2 Infracom/
     ├── cliente.py       # Lógica de envio/recebimento com RDT
     ├── servidor.py      # Lógica de recebimento/envio com RDT
     ├── recebidos/       # Arquivos recebidos pelo servidor
