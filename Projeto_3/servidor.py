@@ -6,7 +6,7 @@ from common import criar_pacote, verifica_segmento
 
 # Configurações
 LISTEN_IP = '0.0.0.0'
-LISTEN_PORT = 5000
+LISTEN_PORT = 5555
 BUFFER_SIZE = 1024
 
 # Estado do Jogo

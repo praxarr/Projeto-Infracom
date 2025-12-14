@@ -12,7 +12,6 @@ def verifica_segmento(segmento: bytes):
     return num_seq, flag, payload
 
 def criar_pacote(seq: int, flag: int, payload):
-    # Garante que seq e flag caibam em 1 byte
     header = seq.to_bytes(1, 'big') + flag.to_bytes(1, 'big')
     if isinstance(payload, str):
         payload = payload.encode('utf-8')
