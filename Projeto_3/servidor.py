@@ -77,6 +77,7 @@ def handle_move(addr, direction):
             placar = "Placar Atual:\n"
             for i in players.values():
                 placar += f"- {i['name']} : {i['score']} ponto(s) \n"
+            broadcast(placar)
             reset_treasure()
             reset_positions()
             return "PARABENS! Voce achou o tesouro."
