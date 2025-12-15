@@ -73,6 +73,7 @@ def handle_move(addr, direction):
     if 1 <= nx <= 3 and 1 <= ny <= 3:
         p['pos'] = [nx, ny]
         if (nx, ny) == treasure_pos:
+            p['score'] = p['score'] + 1
             broadcast(f"O jogador {p['name']} encontrou o tesouro na posicao {treasure_pos}!")
             placar = "Placar Atual:\n"
             for i in players.values():
