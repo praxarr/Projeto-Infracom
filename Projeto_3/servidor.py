@@ -55,6 +55,7 @@ def handle_login(addr, name):
         'seq_out': 0,
         'hints': 1,
         'suggest': 1,
+        'score' : 0
     }
     print(f"[LOGIN] {name} entrou de {addr}")
     return "Voce esta online!"
@@ -73,6 +74,9 @@ def handle_move(addr, direction):
         p['pos'] = [nx, ny]
         if (nx, ny) == treasure_pos:
             broadcast(f"O jogador {p['name']} encontrou o tesouro na posicao {treasure_pos}!")
+            placar = "Placar Atual:\n"
+            for i in players.values():
+                placar += f"- {i['name']} : {i['score']} ponto(s) \n"
             reset_treasure()
             reset_positions()
             return "PARABENS! Voce achou o tesouro."
